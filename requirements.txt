@@ -1,0 +1,12 @@
+SpeechRecognition 
+pydub
+pyttsx3
+kafka-python
+scipy
+sounddevice
+soundfile
+
+pyaudio
+
+# ALSO NEEDED sim eu sei é mt coisa
+# sudo apt install portaudio19-dev python3-pyaudio
