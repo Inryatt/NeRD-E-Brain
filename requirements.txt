@@ -1,7 +1,7 @@
 SpeechRecognition 
 pydub
 pyttsx3
-kafka-python
+amqpstorm
 scipy
 sounddevice
 soundfile

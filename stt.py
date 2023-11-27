@@ -1,11 +1,20 @@
 import speech_recognition as sr
 import soundfile as sf
 import sounddevice as sd
-from scipy.io.wavfile import write
 import numpy as np
-from kafka import KafkaProducer
+
+from amqpstorm import UriConnection
+from amqpstorm import Message
+from scipy.io.wavfile import write
+
+
+
+conn = UriConnection('amqp://localhost:5672/%2f')
+channel=conn.channel()
 # https://realpython.com/python-speech-recognition/
-producer = KafkaProducer(bootstrap_servers='localhost:9094', client_id='prod_bonito',acks="all")
+channel.queue.declare('nerdj/cmd')
+channel.queue.declare('nerdj/play')
+#producer = KafkaProducer(bootstrap_servers='localhost:9094', client_id='prod_bonito',acks="all")
 
 def record():
 
@@ -62,15 +71,21 @@ def debug():
 
 
 def request_song(song):
-    producer.send('nerdj_play', song.encode('utf-8'))
+    #producer.send('nerdj_play', song.encode('utf-8'))
+    message = Message(channel, song)
+    message.publish('nerdj/play')
+
     print(f"asking for {song}")
 
 def parse_command(text):
     print(text)
     print(("música" in text))
     if ("música" in text):
-        if "para" in text:
-            producer.send('nerdj_simplecommand', b'stop')
+        if "para" in text or "parar" in text:
+            #producer.send('nerdj_simplecommand', b'stop')
+            message = Message(channel, 'stop')
+            message.publish('nerdj/cmd')
+
             print("sent")
             return
         if "toca" in text:
@@ -86,5 +101,5 @@ def botloop():
 
 
 if __name__ == '__main__':
-
+    
     botloop()
