@@ -7,13 +7,14 @@ from amqpstorm import UriConnection
 from amqpstorm import Message
 from scipy.io.wavfile import write
 
-
+from nerde_door import opendoor
 
 conn = UriConnection('amqp://localhost:5672/%2f')
 channel=conn.channel()
 # https://realpython.com/python-speech-recognition/
 channel.queue.declare('nerdj/cmd')
 channel.queue.declare('nerdj/play')
+
 #producer = KafkaProducer(bootstrap_servers='localhost:9094', client_id='prod_bonito',acks="all")
 
 def record():
@@ -77,21 +78,35 @@ def request_song(song):
 
     print(f"asking for {song}")
 
+def nerdj_cmd(text:str):
+    message = None
+    if "para" in text or "parar" in text:
+        message = Message(channel, 'stop')
+    if "próxima" in text or "próximo" in text or "skip" in text:
+        message = Message(channel, 'skip')
+    if "pausa" in text or "pause" in text or "pausar" in text :
+        message = Message(channel, 'pause')
+    if message is not None:
+        message.publish('nerdj/cmd')
+    return
+
+
+
 def parse_command(text):
     print(text)
     print(("música" in text))
     if ("música" in text):
-        if "para" in text or "parar" in text:
-            #producer.send('nerdj_simplecommand', b'stop')
-            message = Message(channel, 'stop')
-            message.publish('nerdj/cmd')
-
-            print("sent")
-            return
         if "toca" in text:
             req = text.split("música")[1].strip()
             request_song(req)
-
+            return
+        else:
+            nerdj_cmd(text)
+            return
+    if ("abre" in text and "porta" in text):
+        opendoor()
+        return
+    
 def botloop():
     while True:
         text = transcribe()
@@ -101,5 +116,4 @@ def botloop():
 
 
 if __name__ == '__main__':
-    
     botloop()
