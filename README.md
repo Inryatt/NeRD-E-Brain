@@ -14,6 +14,7 @@ Download/copy the 'docker-compose.yml' in this repo into a nice place on the mac
 ### Step 1.3
 Open terminal, cd into wherever you downloaded it, and run
 `sudo docker-compose up`
+
 TA-DA you have the backend running :)
 
 
@@ -28,7 +29,7 @@ open the requirements.txt and run the apt command there
 CREATE A VENV  (or not, im not your mother)
   - `python3 -m venv venv`
   - `source venv/bin/activate`
-  - 
+    
 Run 
 `pip install -r requirements.txt`
 
