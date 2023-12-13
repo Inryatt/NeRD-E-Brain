@@ -103,8 +103,9 @@ def parse_command(text):
         else:
             nerdj_cmd(text)
             return
-    if ("abre" in text and "porta" in text):
+    if ("abre" in text and "porta" in text) or ("abre-te sésamo" in text):
         opendoor()
+    
         return
     
 def botloop():
