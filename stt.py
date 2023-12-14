@@ -96,6 +96,7 @@ def nerdj_cmd(text:str):
 
 def parse_command(text):
     print(text)
+    text=text.lower()
     print(("música" in text))
     if ("música" in text):
         if "toca" in text:
