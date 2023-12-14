@@ -10,7 +10,7 @@ from scipy.io.wavfile import write
 from nerde_door import opendoor
 
 #conn = UriConnection('amqp://localhost:5672/%2f') # For Testing
-conn = UriConnection('amqp://192.168.2.7:5672/%2f') # For Deployment
+conn = UriConnection('amqp://192.168.2.20:5672/%2f') # For Deployment
 
 channel=conn.channel()
 # https://realpython.com/python-speech-recognition/
