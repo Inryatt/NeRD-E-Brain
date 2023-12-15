@@ -10,7 +10,7 @@ from scipy.io.wavfile import write
 from nerde_door import opendoor
 
 #conn = UriConnection('amqp://localhost:5672/%2f') # For Testing
-conn = UriConnection('amqp://192.168.2.7:5672/%2f') # For Deployment
+conn = UriConnection('amqp://192.168.2.20:5672/%2f') # For Deployment
 
 channel=conn.channel()
 # https://realpython.com/python-speech-recognition/
@@ -37,7 +37,7 @@ def play():
     
 def transcribe():
     r = sr.Recognizer()
-    mic = sr.Microphone(device_index=9)
+    mic = sr.Microphone()
 
     with mic as source:
         r.adjust_for_ambient_noise(source, duration=0.5)
@@ -96,6 +96,7 @@ def nerdj_cmd(text:str):
 
 def parse_command(text):
     print(text)
+    text=text.lower()
     print(("música" in text))
     if ("música" in text):
         if "toca" in text:

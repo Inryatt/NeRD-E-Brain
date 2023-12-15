@@ -4,8 +4,7 @@ pyttsx3
 amqpstorm
 scipy
 sounddevice
-soundfile
-
+paho-mqtt
 pyaudio
 
 # ALSO NEEDED sim eu sei é mt coisa
