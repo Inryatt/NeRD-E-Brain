@@ -37,7 +37,7 @@ def play():
     
 def transcribe():
     r = sr.Recognizer()
-    mic = sr.Microphone(device_index=9)
+    mic = sr.Microphone()
 
     with mic as source:
         r.adjust_for_ambient_noise(source, duration=0.5)
