@@ -100,6 +100,7 @@ def parse_command(text):
     if ("música" in text):
         if "toca" in text:
             req = text.split("música")[1].strip()
+            req = text.split("já")[0].strip()
             request_song(req)
             return
         else:
